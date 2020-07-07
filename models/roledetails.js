@@ -1,28 +1,28 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('roledetails', {
-    'roleid': {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      primaryKey: true,
-      comment: "null",
-      references: {
-        model: 'rolemaster',
-        key: 'roleid'
-      }
+const sequelize = require('../config/db');
+
+const roleDetails = sequelize.define('roledetails', {
+  roleid: {
+    type: Sequelize.INTEGER.UNSIGNED,
+    allowNull: false,
+    primaryKey: true,
+    comment: 'null',
+    references: {
+      model: 'rolemaster',
+      key: 'roleid',
     },
-    'actionid': {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      primaryKey: true,
-      comment: "null",
-      references: {
-        model: 'actionmaster',
-        key: 'actionid'
-      }
-    }
-  }, {
-    tableName: 'roledetails'
-  });
-};
+  },
+  actionid: {
+    type: Sequelize.INTEGER.UNSIGNED,
+    allowNull: false,
+    primaryKey: true,
+    comment: 'null',
+    references: {
+      model: 'actionmaster',
+      key: 'actionid',
+    },
+  },
+});
+
+module.exports = roleDetails;
