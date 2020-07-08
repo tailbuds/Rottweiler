@@ -9,7 +9,7 @@ const roleDetails = sequelize.define('roledetails', {
     primaryKey: true,
     comment: 'null',
     references: {
-      model: 'rolemaster',
+      model: 'rolemasters',
       key: 'roleid',
     },
   },
@@ -19,7 +19,7 @@ const roleDetails = sequelize.define('roledetails', {
     primaryKey: true,
     comment: 'null',
     references: {
-      model: 'actionmaster',
+      model: 'actionmasters',
       key: 'actionid',
     },
   },

@@ -5,6 +5,7 @@ const sequelize = new Sequelize('auth', 'root', 'hanish123', {
   //port: dbConfig.port,
   dialect: 'mysql',
   //logging: false,
+  freezeTableName: true,
 });
 
 module.exports = sequelize;

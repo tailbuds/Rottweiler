@@ -4,23 +4,25 @@ const sequelize = require('../config/db');
 
 const userRoles = sequelize.define('userroles', {
   ubid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true,
+
     comment: 'null',
+    autoIncrement: true,
     references: {
-      model: 'userbase',
+      model: 'userbases',
       key: 'ubid',
     },
   },
   roleid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false,
     defaultValue: '6',
     primaryKey: true,
     comment: 'null',
     references: {
-      model: 'rolemaster',
+      model: 'rolemasters',
       key: 'roleid',
     },
   },

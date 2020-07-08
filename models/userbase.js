@@ -5,7 +5,7 @@ const sequelize = require('../config/db');
 
 const userBase = sequelize.define('userbase', {
   ubid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true,
     primaryKey: true,
@@ -13,39 +13,39 @@ const userBase = sequelize.define('userbase', {
     autoIncrement: true,
   },
   firstName: {
-    type: DataTypes.STRING(45),
+    type: Sequelize.STRING(45),
     allowNull: false,
     comment: 'null',
   },
   lastName: {
-    type: DataTypes.STRING(45),
+    type: Sequelize.STRING(45),
     allowNull: false,
     comment: 'null',
   },
   username: {
-    type: DataTypes.STRING(20),
+    type: Sequelize.STRING(20),
     allowNull: false,
     comment: 'null',
     unique: true,
   },
   password: {
-    type: DataTypes.STRING(128),
+    type: Sequelize.STRING(128),
     allowNull: false,
     comment: 'null',
   },
   dob: {
-    type: DataTypes.DATEONLY,
+    type: Sequelize.DATEONLY,
     allowNull: true,
     comment: 'null',
   },
   createdOn: {
-    type: DataTypes.DATE,
+    type: Sequelize.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     comment: 'null',
   },
   updatedOn: {
-    type: DataTypes.DATE,
+    type: Sequelize.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     comment: 'null',

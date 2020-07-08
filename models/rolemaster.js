@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../config/db');
 const roleMaster = sequelize.define('rolemaster', {
   roleid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true,
     primaryKey: true,
@@ -12,7 +12,7 @@ const roleMaster = sequelize.define('rolemaster', {
     autoIncrement: true,
   },
   role: {
-    type: DataTypes.STRING(20),
+    type: Sequelize.STRING(20),
     allowNull: false,
     comment: 'null',
     unique: true,

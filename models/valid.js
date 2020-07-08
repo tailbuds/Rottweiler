@@ -4,28 +4,28 @@ const sequelize = require('../config/db');
 
 const valid = sequelize.define('valid', {
   ubid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true,
     comment: 'null',
     references: {
-      model: 'userbase',
+      model: 'userbases',
       key: 'ubid',
     },
   },
   startDt: {
-    type: DataTypes.DATE,
+    type: Sequelize.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     comment: 'null',
   },
   expiryDt: {
-    type: DataTypes.DATE,
+    type: Sequelize.DATE,
     allowNull: false,
     comment: 'null',
   },
   locked: {
-    type: DataTypes.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: '0',
     comment: 'null',
