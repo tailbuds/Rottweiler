@@ -4,7 +4,7 @@ module.exports = {
     clientSecret: '',
   },
   facebook: {
-    clientID: '',
+    appID: '',
     clientSecret: '',
   },
 };
