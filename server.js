@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const sequelize = require('./config/db');
-
+const passport = require('passport');
 //Creating Models
 
 const actionMaster = require('./models/actionmaster');
@@ -18,14 +18,10 @@ const userSettings = require('./models/usersettings');
 
 const valid = require('./models/valid');
 
-// Relation between Models
+//Local Imports
+const googleAuth = require('./routes/googleAuth');
 
-user.hasMany(userRoles);
-user.hasMany(userSettings);
-userBase.belongsTo(user);
-
-app.listen(5000);
-
+//Database Connection
 sequelize
   .sync()
   .then((result) => {
@@ -34,3 +30,18 @@ sequelize
   .catch((err) => {
     console.log(err);
   });
+
+// Relation between Models
+
+user.hasMany(userRoles);
+user.hasMany(userSettings);
+userBase.belongsTo(user);
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Routes
+app.use('/auth', googleAuth);
+
+app.listen(5000);

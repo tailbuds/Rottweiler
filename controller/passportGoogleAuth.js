@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const keys = require('./keys');
-const conn = require('./db');
+const keys = require('../config/keys');
+const conn = require('../config/db');
 
 module.exports = (passport) => {
   passport.serializeUser((profile, done) => {
@@ -10,7 +10,7 @@ module.exports = (passport) => {
 
   passport.deserializeUser((id, done) => {
     conn.query(
-      'SELECT * FROM user WHERE google_id=?',
+      'SELECT * FROM users WHERE google_id=?',
       id,
       (err, response, meta) => {
         console.log(id);
@@ -25,15 +25,14 @@ module.exports = (passport) => {
         // options for google strategy
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret,
-        callbackURL: '/auth/google/redirect',
+        callbackURL: '/google/redirect',
       },
       (accessToken, refreshToken, profile, done) => {
         // passport callback function
         console.log('passport callback function fired:');
-
         var name = profile._json.name;
         var id = profile.id;
-        var picture = profile._json.picture;
+        //var picture = profile._json.picture;
 
         conn.query(
           'select * from user where google_id=?',
