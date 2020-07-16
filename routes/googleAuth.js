@@ -1,11 +1,15 @@
 //Importing Required Modules
-const express = require('express');
 const router = require('express').Router();
 const passport = require('passport');
 
+//Login Page Route
+router.get('/login', (req, res) => {
+  res.render('login', { user: req.user });
+});
+
 //Login with Google Route
 router.get(
-  '/auth/google',
+  '/google',
   passport.authenticate('google', {
     scope: ['profile'],
   })

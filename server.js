@@ -18,6 +18,9 @@ const userSettings = require('./models/usersettings');
 
 const valid = require('./models/valid');
 
+//Templating Engine
+app.set('view engine', 'ejs');
+
 //Local Imports
 const googleAuth = require('./routes/googleAuth');
 
@@ -37,9 +40,10 @@ user.hasMany(userRoles);
 user.hasMany(userSettings);
 userBase.belongsTo(user);
 
-// initialize passport
+// Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+require('./controller/passportGoogleAuth')(passport);
 
 //Routes
 app.use('/auth', googleAuth);
