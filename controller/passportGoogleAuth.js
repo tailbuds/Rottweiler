@@ -1,7 +1,8 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('../config/keys');
-const conn = require('../config/db');
+const sequelize = require('../config/db');
+const User = require('../models/user');
 
 module.exports = (passport) => {
   passport.serializeUser((profile, done) => {
@@ -9,14 +10,8 @@ module.exports = (passport) => {
   });
 
   passport.deserializeUser((id, done) => {
-    conn.query(
-      'SELECT * FROM users WHERE google_id=?',
-      id,
-      (err, response, meta) => {
-        console.log(id);
-        done(null, response[0]);
-      }
-    );
+    var user = User.findOne({ where: { googleid: id } });
+    done(null, user);
   });
 
   passport.use(
@@ -25,40 +20,36 @@ module.exports = (passport) => {
         // options for google strategy
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret,
-        callbackURL: '/google/redirect',
+        callbackURL: '/auth/google/redirect',
       },
       (accessToken, refreshToken, profile, done) => {
         // passport callback function
         console.log('passport callback function fired:');
+
         var name = profile._json.name;
         var id = profile.id;
-        //var picture = profile._json.picture;
-
-        conn.query(
-          'select * from user where google_id=?',
-          id,
-          (err, response, meta) => {
-            if (response[0]) {
-              console.log('aready exists');
+        User.findOne({ where: { googleid: id } })
+          .then((user) => {
+            if (user) {
+              console.log('User Already Exist');
               done(null, response[0]);
-            } else if (err) {
-              console.log(err);
             } else {
-              conn.query(
-                'Insert into user (name,google_id,picture)  values(?,?,?)',
-                [name, id, picture],
-                (err, result) => {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    // console.log(result);
-                    done(null, { name: name, google_id: id, picture: picture });
-                  }
-                }
-              );
+              User.create({
+                username: name,
+                googleid: id,
+                password: 'hanish1234',
+              })
+                .then((res) => {
+                  console.log('User Added');
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }
-          }
-        );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     )
   );
